@@ -1,0 +1,1 @@
+web:cross-env NODE_ENV=local dotenv-load node build/server.js
