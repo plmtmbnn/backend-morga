@@ -1,6 +1,7 @@
-import { UserModel, AuthorModel } from '../model/index';
+import { UserModel } from '../model/index';
 import { sequelize } from '../init';
 // require('../model/associations/index');
+
 
 import { queryPayload } from '../../helper/QueryPayload';
 
@@ -15,36 +16,6 @@ class UserQuery {
     return await UserModel.findAndCountAll(options);
   }
 
-  async findAndCountAllWithAuthor(payload: queryPayload) {
-    const options: any = ({
-      attributes: ['id', 'full_name', 'email', 'created_at'],
-      ...payload,
-      include: [
-        {
-          model: AuthorModel,
-          required: false,
-          where: {
-            status: true
-          }
-        }
-      ]
-    });    
-    return await UserModel.findAndCountAll(options);
-  }
-
-  async findAndCountAllWithAuthorOptional(payload: queryPayload) {
-    const options: any = ({
-      attributes: ['id', 'full_name', 'email', 'created_at'],
-      ...payload,
-      include: [
-        {
-          model: AuthorModel,
-          required: false
-        }
-      ]
-    });    
-    return await UserModel.findAndCountAll(options);
-  }
 
   async update(value: any, payload: any) {
     const options: any = ({ ...payload });
@@ -54,6 +25,14 @@ class UserQuery {
   async insert(value: any, payload: queryPayload) {
     const options: any = ({ ...payload });
     return await UserModel.create(value, options);
+  }
+
+  async syncAllTable() {
+    try {
+      await UserModel.sync();      
+    } catch (error) {
+        console.log('[UserQuery][syncAllTable] error', error);        
+    }
   }
 }
 

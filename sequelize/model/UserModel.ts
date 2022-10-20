@@ -8,11 +8,11 @@ export const UserModel = sequelize.define('t_user', {
     primaryKey: true,
     autoIncrement: true
   },
-  full_name: {
+  fullname: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  email: {
+  username: {
     type: DataTypes.STRING,
     allowNull: true
   },
@@ -20,14 +20,14 @@ export const UserModel = sequelize.define('t_user', {
     type: DataTypes.STRING,
     allowNull: true
   },
+  role: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   status: {
     type: DataTypes.BOOLEAN,
     allowNull: true,
     defaultValue: true
-  },
-  avatar_url: {
-    type: DataTypes.STRING,
-    allowNull: true
   },
   created_at: {
     type: DataTypes.DATE,

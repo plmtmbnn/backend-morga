@@ -1,12 +1,18 @@
 import { Sequelize } from 'sequelize';
 
+const DB_NAME: string = process.env.DB_NAME;
+const DB_USER: string = process.env.DB_USER;
+const DB_PASS: string = process.env.DB_PASS;
+const DB_HOST: string = process.env.DB_HOST;
+const DB_PORT: string = process.env.DB_PORT;
+
 export const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASS,
+  DB_NAME,
+  DB_USER,
+  DB_PASS,
   {
-    host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT),
+    host: DB_HOST,
+    port: parseInt(DB_PORT),
     logging: false,
     dialect: 'postgres',
     pool: {
@@ -16,7 +22,7 @@ export const sequelize = new Sequelize(
       idle: 60000
     },
     dialectOptions: {
-      application_name: 'backend-morga-news'
+      application_name: 'backend-morgan'
     }
   }
 );

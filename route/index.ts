@@ -5,7 +5,7 @@ const router = express.Router();
 import {isLoggedIn} from '../midleware/middleware';
 
 // Controller
-import { categoryController } from '../controller/CategoryController';
+import { syncController } from '../controller/SyncController';
 
 // health check endpoint
 router.get(['/health', '/'], (req: Request, res: Response) => {
@@ -15,17 +15,7 @@ router.get(['/health', '/'], (req: Request, res: Response) => {
   });
 });
 
-router.get('/token/check', isLoggedIn, (req: Request, res: Response) => {  
-  res.status(200).json({
-    status: 'SUCCESS',
-    message: 'SUCCESS'
-  });
-});
-
-//category
-router.get('/category/get/all', categoryController.getCategory);
-
-router.get('/sync/db', categoryController.syncDatabase);
+router.get('/sync-db', syncController.syncDatabase);
 
 // Return 404 to all unidentified path URLs
 router.get('*', function (req: Request, res: Response) {
