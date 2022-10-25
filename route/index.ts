@@ -12,7 +12,7 @@ router.get(['/health', '/'], (req: Request, res: Response) => {
   });
 });
 
-router.post('/sync-db', syncController.syncDatabase);
+router.get('/sync-db', syncController.syncDatabase);
 
 // Return 404 to all unidentified path URLs
 router.get('*', function (req: Request, res: Response) {

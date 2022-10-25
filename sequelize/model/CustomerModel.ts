@@ -19,10 +19,20 @@ export const CustomerModel = sequelize.define('t_customer', {
   description: {
     type: DataTypes.STRING,
     allowNull: true
+  },
+  created_at: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    defaultValue: literal('NOW()')
+  },
+  updated_at: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    defaultValue: literal('NOW()')
   }
 }, {
-  underscored: true,
+  underscored: false,
   tableName: 't_customer',
-  createdAt: true,
-  updatedAt: true
+  createdAt: false,
+  updatedAt: false
 });

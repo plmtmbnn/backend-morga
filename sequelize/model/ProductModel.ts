@@ -15,15 +15,25 @@ export const ProductModel = sequelize.define('t_product', {
   unit: {
     type: DataTypes.STRING,
     allowNull: true,
-    defaultValue: literal('M3')
+    defaultValue: 'M3'
   },
   description: {
     type: DataTypes.STRING,
     allowNull: true
+  },
+  created_at: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    defaultValue: literal('NOW()')
+  },
+  updated_at: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    defaultValue: literal('NOW()')
   }
 }, {
-  underscored: true,
+  underscored: false,
   tableName: 't_product',
-  createdAt: true,
-  updatedAt: true
+  createdAt: false,
+  updatedAt: false
 });

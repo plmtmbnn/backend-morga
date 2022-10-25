@@ -7,7 +7,7 @@ import { productController } from '../controller/ProductController';
 const router = express.Router();
 
 router.get('/product', productController.getProduct);
-router.post('/product/add', productController.addProduct);
+router.post('/product/upsert', productController.upsertProduct);
 
 // ============================================================================
 

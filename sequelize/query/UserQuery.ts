@@ -28,12 +28,12 @@ class UserQuery {
   async syncAllTable () {
     try {
       await Promise.all([
-        // UserModel.sync(),
-        DriverModel.sync(),
-        ProductModel.sync(),
-        TruckModel.sync(),
-        CustomerModel.sync(),
-        ProductCustomerModel.sync()
+        // UserModel.sync({ force: true }),
+        DriverModel.sync({ force: true }),
+        ProductModel.sync({ force: true }),
+        TruckModel.sync({ force: true }),
+        CustomerModel.sync({ force: true }),
+        ProductCustomerModel.sync({ force: true })
       ]);
     } catch (error) {
       console.log('[UserQuery][syncAllTable] error', error);

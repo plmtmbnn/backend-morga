@@ -24,10 +24,15 @@ export const TruckModel = sequelize.define('t_truck', {
     type: DataTypes.DATE,
     allowNull: true,
     defaultValue: literal('NOW()')
+  },
+  updated_at: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    defaultValue: literal('NOW()')
   }
 }, {
-  underscored: true,
+  underscored: false,
   tableName: 't_truck',
-  createdAt: true,
-  updatedAt: true
+  createdAt: false,
+  updatedAt: false
 });

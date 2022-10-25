@@ -13,19 +13,42 @@ import { sequelize } from '../sequelize/init';
 
 export class CustomerService {
   // CUSTOMER =====================================================
+  static async getCustomerDetail (req: Request, res: Response): Promise<any> {
+    try {
+      const queryPayload: queryPayload = {
+        order: [['id', 'ASC']],
+        where: { id: req.params.id }
+      };
+      const result: any = await customerQuery.detail(queryPayload);
+      const data: any [] = [];
+      Array(...result.rows).map((e, index) => {
+        const obj: any = e.toJSON();
+        return data.push(obj);
+      });
+      return { data };
+    } catch (error) {
+      console.log('[CustomerService][getCustomerDetail]', error);
+      throw new CustomException(EXCEPTION_MESSAGE.SYSTEM_ERROR);
+    }
+  }
 
   static async getCustomer (req: Request, res: Response): Promise<any> {
-    const queryPayload: queryPayload = {
-      where: {
-        status: true
-      },
-      order: [['id', 'ASC']]
-    };
-    const result: any = await customerQuery.findAndCountAll(queryPayload);
-
-    if (result.count === 0) throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
-
-    return { data: result.rows };
+    try {
+      const queryPayload: queryPayload = {
+        order: [['id', 'ASC']],
+        attributes: ['id', 'name', 'address', 'description']
+      };
+      const result: any = await customerQuery.findAndCountAll(queryPayload);
+      const data: any [] = [];
+      Array(...result.rows).map((e, index) => {
+        const obj: any = e.toJSON();
+        return data.push(obj);
+      });
+      return { data };
+    } catch (error) {
+      console.log('[CustomerService][getCustomer]', error);
+      throw new CustomException(EXCEPTION_MESSAGE.SYSTEM_ERROR);
+    }
   }
 
   static async upsertCustomer (req: Request, res: Response): Promise<any> {
@@ -54,6 +77,7 @@ export class CustomerService {
     } catch (error) {
       await transaction.rollback();
       console.log('[CustomerService][upsertCustomer]', error);
+      throw new CustomException(EXCEPTION_MESSAGE.SYSTEM_ERROR);
     }
   }
   // ============================================================
@@ -62,15 +86,10 @@ export class CustomerService {
 
   static async getCustomerProduct (req: Request, res: Response): Promise<any> {
     const queryPayload: queryPayload = {
-      where: {
-        status: true
-      },
-      order: [['id', 'ASC']]
+      order: [['id', 'ASC']],
+      attributes: ['id', 'customer_id', 'product_id', 'price']
     };
     const result: any = await productCustomerQuery.findAndCountAll(queryPayload);
-
-    if (result.count === 0) throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
-
     return { data: result.rows };
   }
 
@@ -80,18 +99,18 @@ export class CustomerService {
       if (req.body.id) {
         await productCustomerQuery.update(
           {
-            code: req.body.fullname,
-            description: req.body.description,
-            name: req.body.name
+            product_id: req.body.product_id,
+            customer_id: req.body.customer_id,
+            price: req.body.price
           }, {
             transaction,
             where: { id: req.body.id }
           });
       } else {
         await productCustomerQuery.insert({
-          fullname: req.body.fullname,
-          description: req.body.description,
-          name: req.body.name
+          product_id: req.body.product_id,
+          customer_id: req.body.customer_id,
+          price: req.body.price
         }, {
           transaction
         });
@@ -100,6 +119,7 @@ export class CustomerService {
     } catch (error) {
       await transaction.rollback();
       console.log('[CustomerService][upsertCustomerProduct]', error);
+      throw new CustomException(EXCEPTION_MESSAGE.SYSTEM_ERROR);
     }
   }
   // ============================================================

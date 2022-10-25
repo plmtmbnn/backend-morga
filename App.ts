@@ -1,6 +1,11 @@
 // route
 import router from './route';
+
+// auth
 import authRoute from './route/route-auth';
+import customerRoute from './route/route-customer';
+import driverTruckRoute from './route/route-driver-truck';
+import productRoute from './route/route-product';
 
 import cors from 'cors';
 import express from 'express';
@@ -21,7 +26,11 @@ class App {
       this.app.use(express.json({ limit: '100mb' }));
       this.app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 
-      this.app.use('/auth', authRoute);
+      this.app.use('/', authRoute);
+
+      this.app.use('/', customerRoute);
+      this.app.use('/', driverTruckRoute);
+      this.app.use('/', productRoute);
 
       this.app.use('/', router);
 

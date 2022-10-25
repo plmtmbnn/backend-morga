@@ -14,19 +14,14 @@ import { sequelize } from '../sequelize/init';
 export class ProductService {
   static async getProduct (req: Request, res: Response): Promise<any> {
     const queryPayload: queryPayload = {
-      where: {
-        status: true
-      },
-      order: [['id', 'ASC']]
+      order: [['id', 'ASC']],
+      attributes: ['id', 'name', 'unit']
     };
     const result: any = await productQuery.findAndCountAll(queryPayload);
-
-    if (result.count === 0) throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
-
     return { data: result.rows };
   }
 
-  static async addProduct (req: Request, res: Response): Promise<any> {
+  static async upsertProduct (req: Request, res: Response): Promise<any> {
     const transaction = await sequelize.transaction();
     try {
       await productQuery.insert({
@@ -40,6 +35,7 @@ export class ProductService {
     } catch (error) {
       await transaction.rollback();
       console.log('[ProductService][addProduct]', error);
+      throw new CustomException(EXCEPTION_MESSAGE.SYSTEM_ERROR);
     }
   }
 }

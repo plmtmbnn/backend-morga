@@ -5,7 +5,6 @@ import { EXCEPTION_MESSAGE } from '../helper/EXCEPTION_MESSAGE';
 import { CustomException } from '../helper/CustomException';
 
 import Joi from 'joi';
-import formidable from 'formidable';
 
 export class AuthController {
   async login (req: Request, res: Response): Promise<void> {
@@ -49,6 +48,15 @@ export class AuthController {
       }
     } catch (error) {
       console.log('[AuthController][register]', error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
+
+  async getListUser (req: Request, res: Response): Promise<void> {
+    try {
+      const result: any = await AuthService.getUserList(req, res);
+      ResponseHandler.send(res, result);
+    } catch (error) {
       ResponseHandler.send(res, error, true);
     }
   }

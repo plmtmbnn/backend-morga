@@ -92,4 +92,19 @@ export class AuthService {
       ResponseHandler.send(res, error, true);
     }
   }
+
+  static async getUserList (req: Request, res: Response): Promise<any> {
+    const queryPayload: queryPayload = {
+      where: {
+        status: true
+      },
+      order: [['id', 'ASC']],
+      attributes: ['id', 'fullname', 'username', 'role', 'status']
+    };
+    const result: any = await userQuery.findAndCountAll(queryPayload);
+
+    if (result.count === 0) throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
+
+    return { data: result.rows };
+  }
 }

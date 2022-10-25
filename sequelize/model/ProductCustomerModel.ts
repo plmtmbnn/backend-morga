@@ -19,10 +19,20 @@ export const ProductCustomerModel = sequelize.define('t_customer_product_mapping
   price: {
     type: DataTypes.INTEGER,
     allowNull: true
+  },
+  created_at: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    defaultValue: literal('NOW()')
+  },
+  updated_at: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    defaultValue: literal('NOW()')
   }
 }, {
-  underscored: true,
+  underscored: false,
   tableName: 't_customer_product_mapping',
-  createdAt: true,
-  updatedAt: true
+  createdAt: false,
+  updatedAt: false
 });

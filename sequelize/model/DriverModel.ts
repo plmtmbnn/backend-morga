@@ -33,10 +33,15 @@ export const DriverModel = sequelize.define('t_driver', {
     type: DataTypes.DATE,
     allowNull: true,
     defaultValue: literal('NOW()')
+  },
+  updated_at: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    defaultValue: literal('NOW()')
   }
 }, {
-  underscored: true,
+  underscored: false,
   tableName: 't_driver',
-  createdAt: true,
-  updatedAt: true
+  createdAt: false,
+  updatedAt: false
 });

@@ -6,8 +6,9 @@ import { isLoggedIn } from '../midleware/middleware';
 import { authController } from '../controller/AuthController';
 const router = express.Router();
 
-router.post('/login', authController.login);
-router.post('/register', authController.register);
+router.post('/auth/login', authController.login);
+router.post('/auth/register', authController.register);
+router.get('/user', authController.getListUser);
 
 router.get('/logout', (req: Request, res: Response, next: NextFunction) => {
   req.logout(function (err) {

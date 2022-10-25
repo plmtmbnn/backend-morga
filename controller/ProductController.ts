@@ -17,7 +17,7 @@ export class ProductController {
     }
   }
 
-  async addProduct (req: Request, res: Response): Promise<void> {
+  async upsertProduct (req: Request, res: Response): Promise<void> {
     try {
       const schema: Joi.Schema = Joi.object({
         name: Joi.string().required(),
@@ -35,11 +35,11 @@ export class ProductController {
           error: validationResult.error.details
         }), true);
       } else {
-        const result: any = await ProductService.addProduct(req, res);
+        const result: any = await ProductService.upsertProduct(req, res);
         ResponseHandler.send(res, result);
       }
     } catch (error) {
-      console.log('[NewsController][addProduct]', error);
+      console.log('[NewsController][upsertProduct]', error);
       ResponseHandler.send(res, error, true);
     }
   }

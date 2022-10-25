@@ -14,17 +14,22 @@ import { sequelize } from '../sequelize/init';
 export class DriverTruckService {
   // DRIVER =====================================================
 
-  static async getDriver (req: Request, res: Response): Promise<any> {
+  static async getDriverDetail (req: Request, res: Response): Promise<any> {
     const queryPayload: queryPayload = {
-      where: {
-        status: true
-      },
-      order: [['id', 'ASC']]
+      order: [['id', 'ASC']],
+      attributes: ['id', 'fullname', 'description', 'position', 'salary', 'status'],
+      where: { id: req.params.id }
     };
     const result: any = await driverQuery.findAndCountAll(queryPayload);
+    return { data: result.rows };
+  }
 
-    if (result.count === 0) throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
-
+  static async getDriver (req: Request, res: Response): Promise<any> {
+    const queryPayload: queryPayload = {
+      order: [['id', 'ASC']],
+      attributes: ['id', 'fullname', 'description', 'position', 'salary', 'status']
+    };
+    const result: any = await driverQuery.findAndCountAll(queryPayload);
     return { data: result.rows };
   }
 
@@ -58,23 +63,28 @@ export class DriverTruckService {
     } catch (error) {
       await transaction.rollback();
       console.log('[DriverTruckService][upsertDriver]', error);
+      throw new CustomException(EXCEPTION_MESSAGE.SYSTEM_ERROR);
     }
   }
   // ============================================================
 
   // TRUCK =====================================================
+  static async getTruckDetail (req: Request, res: Response): Promise<any> {
+    const queryPayload: queryPayload = {
+      order: [['id', 'ASC']],
+      attributes: ['id', 'name', 'code', 'description'],
+      where: { id: req.params.id }
+    };
+    const result: any = await truckQuery.findAndCountAll(queryPayload);
+    return { data: result.rows };
+  }
 
   static async getTruck (req: Request, res: Response): Promise<any> {
     const queryPayload: queryPayload = {
-      where: {
-        status: true
-      },
-      order: [['id', 'ASC']]
+      order: [['id', 'ASC']],
+      attributes: ['id', 'name', 'code', 'description']
     };
     const result: any = await truckQuery.findAndCountAll(queryPayload);
-
-    if (result.count === 0) throw new CustomException(EXCEPTION_MESSAGE.DATA_NOT_FOUND);
-
     return { data: result.rows };
   }
 
@@ -84,7 +94,7 @@ export class DriverTruckService {
       if (req.body.id) {
         await truckQuery.update(
           {
-            code: req.body.fullname,
+            code: req.body.code,
             description: req.body.description,
             name: req.body.name
           }, {
@@ -93,7 +103,7 @@ export class DriverTruckService {
           });
       } else {
         await truckQuery.insert({
-          fullname: req.body.fullname,
+          code: req.body.code,
           description: req.body.description,
           name: req.body.name
         }, {
@@ -104,6 +114,7 @@ export class DriverTruckService {
     } catch (error) {
       await transaction.rollback();
       console.log('[DriverTruckService][upsertTruck]', error);
+      throw new CustomException(EXCEPTION_MESSAGE.SYSTEM_ERROR);
     }
   }
   // ============================================================

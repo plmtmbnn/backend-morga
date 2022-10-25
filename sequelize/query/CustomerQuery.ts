@@ -1,8 +1,8 @@
-import { CustomerModel } from '../model/index';
+import { CustomerModel, ProductCustomerModel, ProductModel } from '../model/index';
 import { sequelize } from '../init';
-// require('../model/associations/index');
 
 import { queryPayload } from '../../helper/QueryPayload';
+require('../model/associations/index');
 
 class CustomerQuery {
   async find (payload: queryPayload) {
@@ -11,7 +11,21 @@ class CustomerQuery {
   }
 
   async findAndCountAll (payload: queryPayload) {
-    const options: any = ({ ...payload });
+    const options: any = ({
+      ...payload
+    });
+    return await CustomerModel.findAndCountAll(options);
+  }
+
+  async detail (payload: queryPayload) {
+    const options: any = ({
+      ...payload,
+      include: {
+        model: ProductCustomerModel,
+        required: false,
+        include: { model: ProductModel, required: false }
+      }
+    });
     return await CustomerModel.findAndCountAll(options);
   }
 

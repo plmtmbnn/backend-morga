@@ -8,6 +8,15 @@ import { CustomException } from '../helper/CustomException';
 import Joi from 'joi';
 
 export class DriverTruckController {
+  async getDriverDetail (req: Request, res: Response): Promise<void> {
+    try {
+      const result: any = await DriverTruckService.getDriverDetail(req, res);
+      ResponseHandler.send(res, result);
+    } catch (error) {
+      ResponseHandler.send(res, error, true);
+    }
+  }
+
   async getDriver (req: Request, res: Response): Promise<void> {
     try {
       const result: any = await DriverTruckService.getDriver(req, res);
@@ -24,8 +33,8 @@ export class DriverTruckController {
         fullname: Joi.string().required(),
         description: Joi.string().required(),
         position: Joi.string().required(),
-        salary: Joi.string().required(),
-        status: Joi.string().required()
+        salary: Joi.number().required(),
+        status: Joi.boolean().required()
       });
 
       const validationResult: any = schema.validate(req.body);
@@ -43,6 +52,15 @@ export class DriverTruckController {
       }
     } catch (error) {
       console.log('[NewsController][upsertDriver]', error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
+
+  async getTruckDetail (req: Request, res: Response): Promise<void> {
+    try {
+      const result: any = await DriverTruckService.getTruckDetail(req, res);
+      ResponseHandler.send(res, result);
+    } catch (error) {
       ResponseHandler.send(res, error, true);
     }
   }
