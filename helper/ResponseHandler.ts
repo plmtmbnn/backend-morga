@@ -2,10 +2,10 @@ import { EXCEPTION_MESSAGE } from './EXCEPTION_MESSAGE';
 import { Response } from 'express';
 
 export class ResponseHandler {
-  static send(res: Response, responseHandler: any, isFailed: boolean = false) {
+  static send (res: Response, responseHandler: any, isFailed: boolean = false) {
     if (isFailed) {
       if (responseHandler.obj) {
-        res.status(responseHandler.obj.code).json({ status: 'FAILED', message: responseHandler.obj.message, error:  responseHandler.obj.error});
+        res.status(responseHandler.obj.code).json({ status: 'FAILED', message: responseHandler.obj.message, error: responseHandler.obj.error });
       } else {
         res.status(500).json({ status: 'FAILED', message: EXCEPTION_MESSAGE.SYSTEM_ERROR.message });
       }

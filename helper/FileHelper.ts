@@ -1,14 +1,14 @@
-import sharp from "sharp";
+import sharp from 'sharp';
 
-import {makeid} from './StringManipulation';
+import { makeid } from './StringManipulation';
 
 export class FileHelper {
-  static async saveAndResizeFile(file: any, path: string): Promise<any> {
+  static async saveAndResizeFile (file: any, path: string): Promise<any> {
     const filename: string = `${makeid(8)}.png`;
 
-    let result: any = {
+    const result: any = {
       status: false,
-      filename,
+      filename
     };
 
     try {
@@ -21,10 +21,10 @@ export class FileHelper {
           result.status = true;
         })
         .catch(function (err) {
-          console.log("Error occured", err);
+          console.log('Error occured', err);
         });
     } catch (error) {
-      console.log("[FileHelper][saveAndResizeFile]", error);
+      console.log('[FileHelper][saveAndResizeFile]', error);
     }
     return result;
   }

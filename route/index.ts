@@ -1,11 +1,8 @@
-import { NextFunction, Request, Response } from 'express';
-import express from 'express';
-const router = express.Router();
-
-import {isLoggedIn} from '../midleware/middleware';
+import express, { NextFunction, Request, Response } from 'express';
 
 // Controller
 import { syncController } from '../controller/SyncController';
+const router = express.Router();
 
 // health check endpoint
 router.get(['/health', '/'], (req: Request, res: Response) => {
@@ -15,7 +12,7 @@ router.get(['/health', '/'], (req: Request, res: Response) => {
   });
 });
 
-router.get('/sync-db', syncController.syncDatabase);
+router.post('/sync-db', syncController.syncDatabase);
 
 // Return 404 to all unidentified path URLs
 router.get('*', function (req: Request, res: Response) {

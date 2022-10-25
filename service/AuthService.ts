@@ -7,7 +7,7 @@ import { ResponseHandler } from '../helper/ResponseHandler';
 import RedisController from '../midleware/redis';
 import { token } from '../midleware/jwt';
 
-import {decrypt, encrypt} from '../helper/CryptoHelper';
+import { decrypt, encrypt } from '../helper/CryptoHelper';
 
 import {
   userQuery
@@ -18,44 +18,44 @@ import { queryPayload } from 'helper/QueryPayload';
 const redisController: RedisController = new RedisController();
 
 export class AuthService {
-  static async syncDatabase(req: Request, res: Response): Promise<any> {
+  static async syncDatabase (req: Request, res: Response): Promise<any> {
     await userQuery.syncAllTable();
   }
 
-  static async login(req: Request, res: Response): Promise<any> {
+  static async login (req: Request, res: Response): Promise<any> {
     const transaction = await sequelize.transaction();
 
     try {
-        let queryPayload: queryPayload = {
-          where: {
-            username: req.body.username
-          }
-        };
-
-        let result: any = await userQuery.findAndCountAll(queryPayload);
-
-        if (result.count === 0) {
-          return ResponseHandler.send(res, new CustomException(EXCEPTION_MESSAGE.USER_NOT_REGISTERED_YET), true);
+      const queryPayload: queryPayload = {
+        where: {
+          username: req.body.username
         }
-        
-        if(req.body.password !== decrypt(result.rows[0].password)) {
-          return ResponseHandler.send(res, new CustomException(EXCEPTION_MESSAGE.INVALID_USERNAME_OR_PASSWORD), true);
+      };
+
+      const result: any = await userQuery.findAndCountAll(queryPayload);
+
+      if (result.count === 0) {
+        return ResponseHandler.send(res, new CustomException(EXCEPTION_MESSAGE.USER_NOT_REGISTERED_YET), true);
+      }
+
+      if (req.body.password !== decrypt(result.rows[0].password)) {
+        return ResponseHandler.send(res, new CustomException(EXCEPTION_MESSAGE.INVALID_USERNAME_OR_PASSWORD), true);
+      }
+
+      const createdToken: any = token({ user_id: result.rows[0].id, username: req.body.username });
+
+      await redisController.set(`${result.rows[0].id}-${req.body.username}`, createdToken);
+
+      return ResponseHandler.send(res, {
+        data: {
+          id: result.rows[0].id,
+          fullname: result.rows[0].fullname,
+          username: result.rows[0].username,
+          role: result.rows[0].role,
+          token: createdToken
         }
-
-          const createdToken: any = token({ user_id: result.rows[0].id, username: req.body.username });
-
-          await redisController.set(`${result.rows[0].id}-${req.body.username}`, createdToken);
-
-          return ResponseHandler.send(res, {
-            data: {
-              id: result.rows[0].id, 
-              fullname: result.rows[0].fullname,
-              username: result.rows[0].username,
-              role: result.rows[0].role,
-              token: createdToken
-            }
-          });
-          ;
+      });
+      ;
     } catch (error) {
       await transaction.rollback();
       console.log('[AuthService][login]', error);
@@ -63,17 +63,17 @@ export class AuthService {
     }
   }
 
-  static async register(req: Request, res: Response): Promise<any> {
+  static async register (req: Request, res: Response): Promise<any> {
     const transaction = await sequelize.transaction();
-    
+
     try {
-      let queryPayload: queryPayload = {
+      const queryPayload: queryPayload = {
         where: {
           username: req.body.username
         }
       };
-  
-      let result: any = await userQuery.findAndCountAll(queryPayload);
+
+      const result: any = await userQuery.findAndCountAll(queryPayload);
       if (result.count === 0) {
         await userQuery.insert({
           fullname: req.body.fullname,

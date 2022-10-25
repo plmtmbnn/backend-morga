@@ -1,4 +1,4 @@
-//route
+// route
 import router from './route';
 import authRoute from './route/route-auth';
 
@@ -10,19 +10,19 @@ import fs from 'fs';
 class App {
   app: any;
 
-  constructor() {
+  constructor () {
     this.app = express().disable('x-powered-by');
     this.config();
   }
 
-  async config(): Promise<void> {
+  async config (): Promise<void> {
     try {
       this.app.use(cors());
       this.app.use(express.json({ limit: '100mb' }));
       this.app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 
       this.app.use('/auth', authRoute);
-      
+
       this.app.use('/', router);
 
       // var avatarDir = './image/avatar';

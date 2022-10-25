@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { AuthService } from '../service/AuthService';
 import { ResponseHandler } from '../helper/ResponseHandler';
 
-import Joi from "joi";
+import Joi from 'joi';
 
 export class SyncController {
   async syncDatabase (req: Request, res: Response): Promise<void> {

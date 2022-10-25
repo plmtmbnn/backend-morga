@@ -1,8 +1,8 @@
 import { createClient } from 'redis';
 
-var client : any = createClient({
+const client : any = createClient({
   url: 'redis://default:N1ZikVdsY0kkbCBiUjCkIhYXQDmJjcBE@redis-10006.c273.us-east-1-2.ec2.cloud.redislabs.com:10006'
- });
+});
 
 client.connect();
 
@@ -16,9 +16,9 @@ export default class RedisController {
       await client.set(key, value, {
         EX: 60 * 60 * 24,
         NX: true
-      }); 
+      });
     } catch (error) {
-      console.log('[RedisController][set]',error);
+      console.log('[RedisController][set]', error);
     }
   }
 
@@ -27,7 +27,7 @@ export default class RedisController {
     try {
       result = await client.get(key);
     } catch (error) {
-      console.log('[RedisController][get]',error);      
+      console.log('[RedisController][get]', error);
     }
     return result;
   }

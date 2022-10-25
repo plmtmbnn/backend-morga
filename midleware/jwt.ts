@@ -15,9 +15,9 @@ export function token (userParam: any): any {
 }
 
 export function verifyToken (token: string) {
-  var userLogin = null;
-  try {    
-    var decodedToken: any = jwt.verify(token, getSecret());
+  let userLogin = null;
+  try {
+    const decodedToken: any = jwt.verify(token, getSecret());
     userLogin = decodedToken.data;
     return userLogin;
   } catch (e) {
@@ -27,10 +27,10 @@ export function verifyToken (token: string) {
 }
 
 export function verifyTokenAccess (token) {
-  var userLogin = null;
-  var result = {};
+  let userLogin = null;
+  let result = {};
   try {
-    var decodedToken: any = jwt.verify(token, getSecret());
+    const decodedToken: any = jwt.verify(token, getSecret());
     userLogin = Buffer.from(decodedToken.data, 'base64').toString('ascii');
     result = { userLogin };
     return result;
