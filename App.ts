@@ -6,6 +6,7 @@ import authRoute from './route/route-auth';
 import customerRoute from './route/route-customer';
 import driverTruckRoute from './route/route-driver-truck';
 import productRoute from './route/route-product';
+import transactionRoute from './route/route-transaction';
 
 import cors from 'cors';
 import express from 'express';
@@ -31,6 +32,7 @@ class App {
       this.app.use('/', customerRoute);
       this.app.use('/', driverTruckRoute);
       this.app.use('/', productRoute);
+      this.app.use('/', transactionRoute);
 
       this.app.use('/', router);
 

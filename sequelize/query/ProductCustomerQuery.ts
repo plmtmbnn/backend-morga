@@ -1,4 +1,4 @@
-import { ProductCustomerModel } from '../model/index';
+import { ProductCustomerModel, ProductModel, CustomerModel } from '../model/index';
 import { sequelize } from '../init';
 // require('../model/associations/index');
 
@@ -11,7 +11,13 @@ class ProductCustomerQuery {
   }
 
   async findAndCountAll (payload: queryPayload) {
-    const options: any = ({ ...payload });
+    const options: any = ({
+      ...payload,
+      include: [
+        { model: ProductModel, required: true },
+        { model: CustomerModel, required: true }
+      ]
+    });
     return await ProductCustomerModel.findAndCountAll(options);
   }
 

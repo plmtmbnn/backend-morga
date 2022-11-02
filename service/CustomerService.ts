@@ -86,9 +86,27 @@ export class CustomerService {
 
   static async getCustomerProduct (req: Request, res: Response): Promise<any> {
     const queryPayload: queryPayload = {
-      order: [['id', 'ASC']],
-      attributes: ['id', 'customer_id', 'product_id', 'price']
+      order: [['id', 'ASC']]
+      // attributes: ['id', 'customer_id', 'product_id', 'price']
     };
+
+    if (req.body.id) {
+      queryPayload.where = {
+        id: req.body.id
+      };
+    }
+
+    if (req.body.product_id) {
+      queryPayload.where = {
+        product_id: req.body.product_id
+      };
+    }
+
+    if (req.body.customer_id) {
+      queryPayload.where = {
+        customer_id: req.body.customer_id
+      };
+    }
     const result: any = await productCustomerQuery.findAndCountAll(queryPayload);
     return { data: result.rows };
   }

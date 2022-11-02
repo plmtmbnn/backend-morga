@@ -1,4 +1,7 @@
-import { UserModel, DriverModel, ProductModel, TruckModel, CustomerModel, ProductCustomerModel } from '../model/index';
+import {
+  UserModel, DriverModel, ProductModel, TruckModel,
+  CustomerModel, ProductCustomerModel, TransactionModel
+} from '../model/index';
 import { sequelize } from '../init';
 // require('../model/associations/index');
 
@@ -33,7 +36,8 @@ class UserQuery {
         ProductModel.sync({ force: true }),
         TruckModel.sync({ force: true }),
         CustomerModel.sync({ force: true }),
-        ProductCustomerModel.sync({ force: true })
+        ProductCustomerModel.sync({ force: true }),
+        TransactionModel.sync({ force: true })
       ]);
     } catch (error) {
       console.log('[UserQuery][syncAllTable] error', error);

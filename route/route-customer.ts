@@ -10,7 +10,7 @@ router.get('/customer/detail/:id', customerController.getCustomerDetail);
 router.get('/customer', customerController.getCustomer);
 router.post('/customer/upsert', customerController.upsertCustomer);
 
-router.get('/customer-product', customerController.getCustomerProduct);
+router.post('/customer-product', customerController.getCustomerProduct);
 router.post('/customer-product/upsert', customerController.upsertCustomerProduct);
 
 // ============================================================================
