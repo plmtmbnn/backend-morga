@@ -43,16 +43,16 @@ export class TransactionController {
     try {
       const schema: Joi.Schema = Joi.object({
         id: Joi.string().uuid().optional(),
-        customer_product_mapping_id: Joi.number().required(),
-        truck_id: Joi.number().required(),
-        driver_id: Joi.number().required(),
-        total_unit: Joi.number().required(),
-        origin_price: Joi.number().required(),
-        date_delivery: Joi.date().required(),
-        date_paid: Joi.date().optional(),
+        customer_product_mapping_id: Joi.number().optional(),
+        truck_id: Joi.number().optional(),
+        driver_id: Joi.number().optional(),
+        total_unit: Joi.number().optional(),
+        origin_price: Joi.number().optional(),
+        date_delivery: Joi.date().optional(),
+        date_paid: Joi.date().allow(null).optional(),
         status: Joi.string().required(),
-        amount_billing: Joi.number().required(),
-        amount_paid: Joi.number().optional(),
+        amount_billing: Joi.number().optional(),
+        amount_paid: Joi.number().allow(null).optional(),
         description: Joi.string().optional()
       });
 
@@ -71,6 +71,16 @@ export class TransactionController {
       }
     } catch (error) {
       console.log('[TransactionController][upsertTransaction]', error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
+
+  async deleteTransaction (req: Request, res: Response): Promise<void> {
+    try {
+      const result: any = await TransactionService.deleteTransaction(req, res);
+      ResponseHandler.send(res, result);
+    } catch (error) {
+      console.log('[TransactionController][deleteTransaction]', error);
       ResponseHandler.send(res, error, true);
     }
   }

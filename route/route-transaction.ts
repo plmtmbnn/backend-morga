@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.post('/transaction', transactionController.getTransaction);
 router.post('/transaction/upsert', transactionController.upsertTransaction);
+router.get('/transaction/delete/:id', transactionController.deleteTransaction);
 
 // ============================================================================
 

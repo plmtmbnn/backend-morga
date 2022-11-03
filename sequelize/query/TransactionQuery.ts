@@ -44,6 +44,11 @@ class TransactionQuery {
     const options: any = ({ ...payload });
     return await TransactionModel.create(value, options);
   }
+
+  async delete (payload: queryPayload) {
+    const options: any = ({ ...payload });
+    return await TransactionModel.destroy(options);
+  }
 }
 
 export const transactionQuery = new TransactionQuery();

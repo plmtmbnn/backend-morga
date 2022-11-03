@@ -50,17 +50,17 @@ export class TransactionService {
     try {
       if (req.body.id) {
         await transactionQuery.update({
-          customer_product_mapping_id: req.body.customer_product_mapping_id,
-          truck_id: req.body.truck_id,
-          driver_id: req.body.driver_id,
-          total_unit: req.body.total_unit,
-          origin_price: req.body.origin_price,
-          date_delivery: req.body.date_delivery,
-          date_paid: req.body.date_paid,
-          status: req.body.status,
-          amount_billing: req.body.amount_billing,
-          amount_paid: req.body.amount_paid,
-          description: req.body.description
+          customer_product_mapping_id: req.body.customer_product_mapping_id || undefined,
+          truck_id: req.body.truck_id || undefined,
+          driver_id: req.body.driver_id || undefined,
+          total_unit: req.body.total_unit || undefined,
+          origin_price: req.body.origin_price || undefined,
+          date_delivery: req.body.date_delivery || undefined,
+          date_paid: req.body.date_paid || undefined,
+          status: req.body.status || undefined,
+          amount_billing: req.body.amount_billing || undefined,
+          amount_paid: req.body.amount_paid || undefined,
+          description: req.body.description || undefined
         }, {
           transaction,
           where: {
@@ -89,6 +89,25 @@ export class TransactionService {
     } catch (error) {
       await transaction.rollback();
       console.log('[TransactionService][upsertTransaction]', error);
+      throw new CustomException(EXCEPTION_MESSAGE.SYSTEM_ERROR);
+    }
+  }
+
+  static async deleteTransaction (req: Request, res: Response): Promise<any> {
+    const transaction = await sequelize.transaction();
+    try {
+      if (req.params.id) {
+        await transactionQuery.delete({
+          transaction,
+          where: {
+            id: req.params.id
+          }
+        });
+      }
+      await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
+      console.log('[TransactionService][deleteTransaction]', error);
       throw new CustomException(EXCEPTION_MESSAGE.SYSTEM_ERROR);
     }
   }
