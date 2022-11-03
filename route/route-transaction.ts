@@ -6,7 +6,7 @@ import { isLoggedIn } from '../midleware/middleware';
 import { transactionController } from '../controller/TransactionController';
 const router = express.Router();
 
-router.get('/transaction', transactionController.getTransaction);
+router.post('/transaction', transactionController.getTransaction);
 router.post('/transaction/upsert', transactionController.upsertTransaction);
 
 // ============================================================================

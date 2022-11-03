@@ -10,11 +10,36 @@ import {
 import { queryPayload } from 'helper/QueryPayload';
 
 import { sequelize } from '../sequelize/init';
+import moment from 'moment';
+
+const { Op } = require('sequelize');
 
 export class TransactionService {
   static async getTransaction (req: Request, res: Response): Promise<any> {
+    const where: any = {};
+
+    if (req.body.truck_id) {
+      where.truck_id = req.body.truck_id;
+    }
+    if (req.body.driver_id) {
+      where.driver_id = req.body.driver_id;
+    }
+    if (req.body.status) {
+      where.status = req.body.status;
+    }
+    if (req.body.customer_product_mapping_id) {
+      where.customer_product_mapping_id = req.body.customer_product_mapping_id;
+    }
+    if (req.body.date_delivery && req.body.date_delivery?.length === 2) {
+      const dateRange: any[] = Array(...req.body.date_delivery);
+      const startedDate = moment(dateRange[0]).format('YYYY-MM-DD 00:00:00');
+      const endDate = moment(dateRange[1]).format('YYYY-MM-DD 00:00:00');
+      where.date_delivery = { [Op.between]: [startedDate, endDate] };
+    }
+
     const queryPayload: queryPayload = {
-      order: [['id', 'ASC']]
+      order: [['id', 'ASC']],
+      where
     };
     const result: any = await transactionQuery.detail(queryPayload);
     return { data: result.rows };
