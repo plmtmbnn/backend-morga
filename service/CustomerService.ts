@@ -36,7 +36,7 @@ export class CustomerService {
     try {
       const queryPayload: queryPayload = {
         order: [['id', 'ASC']],
-        attributes: ['id', 'name', 'address', 'description']
+        attributes: ['id', 'name', 'address', 'description', 'delivery_price']
       };
       const result: any = await customerQuery.findAndCountAll(queryPayload);
       const data: any [] = [];
@@ -59,7 +59,8 @@ export class CustomerService {
           {
             name: req.body.name,
             description: req.body.description,
-            address: req.body.address
+            address: req.body.address,
+            delivery_price: req.body.delivery_price
           }, {
             transaction,
             where: { id: req.body.id }
@@ -68,7 +69,8 @@ export class CustomerService {
         await customerQuery.insert({
           name: req.body.name,
           description: req.body.description,
-          address: req.body.address
+          address: req.body.address,
+          delivery_price: req.body.delivery_price
         }, {
           transaction
         });

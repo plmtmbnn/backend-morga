@@ -31,7 +31,8 @@ export class CustomerController {
       const schema: Joi.Schema = Joi.object({
         name: Joi.string().required(),
         address: Joi.string().required(),
-        description: Joi.string().required()
+        description: Joi.string().required(),
+        delivery_price: Joi.number().required()
       });
 
       const validationResult: any = schema.validate(req.body);

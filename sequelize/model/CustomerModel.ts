@@ -20,6 +20,10 @@ export const CustomerModel = sequelize.define('t_customer', {
     type: DataTypes.STRING,
     allowNull: true
   },
+  delivery_price: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
   created_at: {
     type: DataTypes.DATE,
     allowNull: true,
