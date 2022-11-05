@@ -35,8 +35,7 @@ export class CustomerService {
   static async getCustomer (req: Request, res: Response): Promise<any> {
     try {
       const queryPayload: queryPayload = {
-        order: [['id', 'ASC']],
-        attributes: ['id', 'name', 'address', 'description', 'delivery_price']
+        order: [['id', 'ASC']]
       };
       const result: any = await customerQuery.findAndCountAll(queryPayload);
       const data: any [] = [];
@@ -60,7 +59,9 @@ export class CustomerService {
             name: req.body.name,
             description: req.body.description,
             address: req.body.address,
-            delivery_price: req.body.delivery_price
+            delivery_price: req.body.delivery_price,
+            receipter_name: req.body.receipter_name,
+            receipter_phone: req.body.receipter_phone
           }, {
             transaction,
             where: { id: req.body.id }
@@ -70,7 +71,9 @@ export class CustomerService {
           name: req.body.name,
           description: req.body.description,
           address: req.body.address,
-          delivery_price: req.body.delivery_price
+          delivery_price: req.body.delivery_price,
+          receipter_name: req.body.receipter_name,
+          receipter_phone: req.body.receipter_phone
         }, {
           transaction
         });
@@ -89,7 +92,6 @@ export class CustomerService {
   static async getCustomerProduct (req: Request, res: Response): Promise<any> {
     const queryPayload: queryPayload = {
       order: [['id', 'ASC']]
-      // attributes: ['id', 'customer_id', 'product_id', 'price']
     };
 
     if (req.body.id) {

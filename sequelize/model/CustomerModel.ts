@@ -24,6 +24,14 @@ export const CustomerModel = sequelize.define('t_customer', {
     type: DataTypes.INTEGER,
     allowNull: true
   },
+  receipter_name: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  receipter_phone: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   created_at: {
     type: DataTypes.DATE,
     allowNull: true,

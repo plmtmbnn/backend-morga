@@ -31,6 +31,8 @@ export class CustomerController {
       const schema: Joi.Schema = Joi.object({
         name: Joi.string().required(),
         address: Joi.string().required(),
+        receipter_name: Joi.string().optional(),
+        receipter_phone: Joi.string().optional(),
         description: Joi.string().required(),
         delivery_price: Joi.number().required()
       });
