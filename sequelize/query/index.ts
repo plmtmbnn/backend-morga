@@ -5,3 +5,5 @@ export { truckQuery } from './TruckQuery';
 export { customerQuery } from './CustomerQuery';
 export { productCustomerQuery } from './ProductCustomerQuery';
 export { transactionQuery } from './TransactionQuery';
+export { employeeQuery } from './EmployeeQuery';
+export { employeeSalaryQuery } from './EmployeeSalaryQuery';

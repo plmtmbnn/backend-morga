@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
+import e, { Request, Response } from 'express';
 
 import { EXCEPTION_MESSAGE } from '../helper/EXCEPTION_MESSAGE';
 import { CustomException } from '../helper/CustomException';
 
 import {
-  driverQuery, truckQuery
+  driverQuery, truckQuery, employeeQuery
 } from '../sequelize/query';
 
 import { queryPayload } from 'helper/QueryPayload';
@@ -17,7 +17,6 @@ export class DriverTruckService {
   static async getDriverDetail (req: Request, res: Response): Promise<any> {
     const queryPayload: queryPayload = {
       order: [['id', 'ASC']],
-      attributes: ['id', 'fullname', 'description', 'position', 'salary', 'status'],
       where: { id: req.params.id }
     };
     const result: any = await driverQuery.findAndCountAll(queryPayload);
@@ -26,8 +25,7 @@ export class DriverTruckService {
 
   static async getDriver (req: Request, res: Response): Promise<any> {
     const queryPayload: queryPayload = {
-      order: [['id', 'ASC']],
-      attributes: ['id', 'fullname', 'description', 'position', 'salary', 'status']
+      order: [['id', 'ASC']]
     };
     const result: any = await driverQuery.findAndCountAll(queryPayload);
     return { data: result.rows };
@@ -37,24 +35,49 @@ export class DriverTruckService {
     const transaction = await sequelize.transaction();
     try {
       if (req.body.id) {
-        await driverQuery.update(
+        const driver: any = await driverQuery.update(
           {
-            fullname: req.body.fullname,
-            description: req.body.description,
-            position: req.body.position,
-            salary: req.body.salary,
-            status: req.body.status
+            fullname: req.body.fullname || undefined,
+            description: req.body.description || undefined,
+            salary: req.body.salary || undefined,
+            status: req.body.status || undefined,
+            address: req.body.address || undefined,
+            phone: req.body.phone || undefined,
+            home_distance: req.body.home_distance || undefined,
+            code: req.body.code || undefined
           }, {
             transaction,
             where: { id: req.body.id }
           });
+        await employeeQuery.update({
+          fullname: req.body.fullname || undefined,
+          position: 'SUPIR',
+          salary: req.body.salary || undefined,
+          status: req.body.status || undefined
+        }, {
+          transaction,
+          where: {
+            id: driver.employee_id
+          }
+        });
       } else {
+        const employee: any = await employeeQuery.insert({
+          fullname: req.body.fullname || undefined,
+          position: 'SUPIR',
+          salary: req.body.salary || undefined,
+          status: req.body.status || undefined
+        }, { transaction });
+
         await driverQuery.insert({
-          fullname: req.body.fullname,
-          description: req.body.description,
-          position: req.body.position,
-          salary: req.body.salary,
-          status: req.body.status
+          fullname: req.body.fullname || undefined,
+          description: req.body.description || undefined,
+          salary: req.body.salary || undefined,
+          status: req.body.status || undefined,
+          address: req.body.address || undefined,
+          phone: req.body.phone || undefined,
+          home_distance: req.body.home_distance || undefined,
+          code: req.body.code || undefined,
+          employee_id: employee.id
         }, {
           transaction
         });

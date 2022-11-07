@@ -1,6 +1,6 @@
 import {
   UserModel, CustomerModel, DriverModel, ProductCustomerModel, ProductModel, TruckModel,
-  TransactionModel
+  TransactionModel, EmployeeModel, EmployeeSalaryModel
 } from '../index';
 
 CustomerModel.hasOne(ProductCustomerModel, { foreignKey: 'customer_id' });
@@ -17,3 +17,9 @@ TransactionModel.belongsTo(TruckModel, { foreignKey: 'truck_id' });
 
 ProductCustomerModel.hasMany(TransactionModel, { foreignKey: 'customer_product_mapping_id' });
 TransactionModel.belongsTo(ProductCustomerModel, { foreignKey: 'customer_product_mapping_id' });
+
+EmployeeModel.hasOne(DriverModel, { foreignKey: 'employee_id' });
+DriverModel.belongsTo(EmployeeModel, { foreignKey: 'employee_id' });
+
+EmployeeModel.hasMany(EmployeeSalaryModel, { foreignKey: 'employee_id' });
+EmployeeSalaryModel.belongsTo(EmployeeModel, { foreignKey: 'employee_id' });

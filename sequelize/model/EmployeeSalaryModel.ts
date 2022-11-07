@@ -1,49 +1,59 @@
 import { sequelize } from '../init';
 import { DataTypes, literal } from 'sequelize';
 
-export const DriverModel = sequelize.define('t_driver', {
+export const EmployeeSalaryModel = sequelize.define('t_employee_salary', {
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     primaryKey: true,
-    autoIncrement: true
+    defaultValue: literal('uuid_generate_v1()')
   },
-  fullname: {
+  payment_name: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  description: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  salary: {
-    type: DataTypes.INTEGER,
-    allowNull: true
-  },
-  home_distance: {
-    type: DataTypes.INTEGER,
-    allowNull: true
-  },
-  code: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  status: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    defaultValue: true
-  },
-  phone: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    defaultValue: 'AKTIF'
-  },
-  address: {
+  payment_type: {
     type: DataTypes.STRING,
     allowNull: true
   },
   employee_id: {
     type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  delivery_total: {
+    type: DataTypes.SMALLINT,
+    allowNull: true
+  },
+  amount: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  fuel_type: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  fuel_price: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  fuel_amount: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  payment_date: {
+    type: DataTypes.DATE,
+    allowNull: true
+  },
+  order: {
+    type: DataTypes.SMALLINT,
+    allowNull: true
+  },
+  description: {
+    type: DataTypes.STRING,
     allowNull: true
   },
   created_at: {
@@ -58,7 +68,7 @@ export const DriverModel = sequelize.define('t_driver', {
   }
 }, {
   underscored: false,
-  tableName: 't_driver',
+  tableName: 't_employee_salary',
   createdAt: false,
   updatedAt: false
 });

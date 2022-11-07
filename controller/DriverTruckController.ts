@@ -30,11 +30,14 @@ export class DriverTruckController {
     try {
       const schema: Joi.Schema = Joi.object({
         id: Joi.number().optional(),
-        fullname: Joi.string().required(),
-        description: Joi.string().required(),
-        position: Joi.string().required(),
-        salary: Joi.number().required(),
-        status: Joi.boolean().required()
+        fullname: Joi.string().optional(),
+        description: Joi.string().optional(),
+        salary: Joi.number().optional(),
+        status: Joi.string().optional(),
+        address: Joi.string().optional(),
+        phone: Joi.string().optional(),
+        home_distance: Joi.number().optional(),
+        code: Joi.string().optional()
       });
 
       const validationResult: any = schema.validate(req.body);

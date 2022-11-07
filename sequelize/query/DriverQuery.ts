@@ -1,4 +1,4 @@
-import { DriverModel } from '../model/index';
+import { DriverModel, EmployeeModel } from '../model/index';
 import { sequelize } from '../init';
 // require('../model/associations/index');
 
@@ -11,7 +11,15 @@ class DriverQuery {
   }
 
   async findAndCountAll (payload: queryPayload) {
-    const options: any = ({ ...payload });
+    const options: any = ({
+      ...payload,
+      include: [
+        {
+          model: EmployeeModel,
+          required: true
+        }
+      ]
+    });
     return await DriverModel.findAndCountAll(options);
   }
 
