@@ -41,7 +41,7 @@ export class SalaryService {
     const transaction = await sequelize.transaction();
     try {
       if (req.body.id) {
-        await employeeSalaryQuery.insert({
+        await employeeSalaryQuery.update({
           payment_name: req.body.payment_name || undefined,
           status: req.body.status || undefined,
           employee_id: req.body.employee_id,
