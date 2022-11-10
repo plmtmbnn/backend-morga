@@ -56,10 +56,10 @@ export class TransactionService {
           total_unit: req.body.total_unit || undefined,
           origin_price: req.body.origin_price || undefined,
           date_delivery: req.body.date_delivery || undefined,
-          date_paid: req.body.date_paid || undefined,
+          date_paid: req.body.date_paid,
           status: req.body.status || undefined,
           amount_billing: req.body.amount_billing || undefined,
-          amount_paid: req.body.amount_paid || undefined,
+          amount_paid: req.body.amount_paid,
           description: req.body.description || undefined
         }, {
           transaction,
