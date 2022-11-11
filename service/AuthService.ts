@@ -81,11 +81,45 @@ export class AuthService {
         await transaction.commit();
         return ResponseHandler.send(res, {});
       } else {
+        await transaction.rollback();
         return ResponseHandler.send(res, new CustomException(EXCEPTION_MESSAGE.USERNAME_ALREADY_USED), true);
       }
     } catch (error) {
       await transaction.rollback();
       console.log('[AuthService][register]', error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
+
+  static async changePassword (req: Request, res: Response): Promise<any> {
+    const transaction = await sequelize.transaction();
+
+    try {
+      const queryPayload: queryPayload = {
+        where: {
+          id: req.body.id
+        }
+      };
+
+      const result: any = await userQuery.findAndCountAll(queryPayload);
+      if (result.count > 0) {
+        await userQuery.update({
+          password: encrypt(req.body.password)
+        }, {
+          transaction,
+          where: {
+            id: req.body.id
+          }
+        });
+        await transaction.commit();
+        return ResponseHandler.send(res, {});
+      } else {
+        await transaction.rollback();
+        return ResponseHandler.send(res, new CustomException(EXCEPTION_MESSAGE.USER_NOT_REGISTERED_YET), true);
+      }
+    } catch (error) {
+      await transaction.rollback();
+      console.log('[AuthService][changePassword]', error);
       ResponseHandler.send(res, error, true);
     }
   }

@@ -9,6 +9,7 @@ const router = express.Router();
 router.post('/auth/login', authController.login);
 router.post('/auth/register', authController.register);
 router.get('/user', authController.getListUser);
+router.post('/password/change', authController.changePassword);
 
 router.get('/logout', (req: Request, res: Response, next: NextFunction) => {
   req.logout(function (err) {

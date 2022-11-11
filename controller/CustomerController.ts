@@ -29,6 +29,7 @@ export class CustomerController {
   async upsertCustomer (req: Request, res: Response): Promise<void> {
     try {
       const schema: Joi.Schema = Joi.object({
+        id: Joi.number().optional(),
         name: Joi.string().required(),
         address: Joi.string().required(),
         receipter_name: Joi.string().optional(),

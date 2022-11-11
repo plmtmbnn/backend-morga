@@ -1,7 +1,7 @@
 import {
   UserModel, DriverModel, ProductModel, TruckModel,
   CustomerModel, ProductCustomerModel, TransactionModel,
-  EmployeeModel, EmployeeSalaryModel
+  EmployeeModel, EmployeeSalaryModel, CashbookModel
 } from '../model/index';
 import { sequelize } from '../init';
 // require('../model/associations/index');
@@ -36,11 +36,12 @@ class UserQuery {
       // await TruckModel.sync({ force: true });
       // await DriverModel.sync({ force: true });
       // await EmployeeModel.sync({ force: true });
-      await EmployeeSalaryModel.sync({ force: true });
+      // await EmployeeSalaryModel.sync({ force: true });
       // await DriverModel.sync({ force: true });
       // await CustomerModel.sync({ force: true });
       // await ProductCustomerModel.sync({ force: true });
       // await TransactionModel.sync({ force: true });
+      await CashbookModel.sync({ force: true });
     } catch (error) {
       console.log('[UserQuery][syncAllTable] error', error);
     }

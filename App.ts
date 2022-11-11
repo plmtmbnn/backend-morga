@@ -8,6 +8,7 @@ import driverTruckRoute from './route/route-driver-truck';
 import productRoute from './route/route-product';
 import transactionRoute from './route/route-transaction';
 import salaryRoute from './route/route-salary';
+import cashbookRoute from './route/route-cashbook';
 
 import cors from 'cors';
 import express from 'express';
@@ -29,24 +30,13 @@ class App {
       this.app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 
       this.app.use('/', authRoute);
-
       this.app.use('/', customerRoute);
       this.app.use('/', driverTruckRoute);
       this.app.use('/', productRoute);
       this.app.use('/', transactionRoute);
       this.app.use('/', salaryRoute);
-
+      this.app.use('/', cashbookRoute);
       this.app.use('/', router);
-
-      // var avatarDir = './image/avatar';
-      // var newsDir = './image/news';
-
-      // if (!fs.existsSync(avatarDir)){
-      //     fs.mkdirSync(avatarDir, { recursive: true });
-      // }
-      // if (!fs.existsSync(newsDir)){
-      //     fs.mkdirSync(newsDir, { recursive: true });
-      // }
     } catch (error) {
       console.log('[App][config] error:', error);
     }

@@ -57,7 +57,7 @@ export class DriverTruckService {
         }, {
           transaction,
           where: {
-            id: driver.employee_id
+            id: driver[1][0].dataValues.employee_id
           }
         });
       } else {

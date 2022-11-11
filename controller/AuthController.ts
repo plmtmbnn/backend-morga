@@ -60,6 +60,30 @@ export class AuthController {
       ResponseHandler.send(res, error, true);
     }
   }
+
+  async changePassword (req: Request, res: Response): Promise<void> {
+    try {
+      const schema: Joi.Schema = Joi.object({
+        user_id: Joi.string().required(),
+        password: Joi.string().required()
+      });
+      const validationResult: any = schema.validate(req.body);
+      if (
+        validationResult.error &&
+            validationResult.error.details.length > 0
+      ) {
+        ResponseHandler.send(res, new CustomException({
+          ...EXCEPTION_MESSAGE.MISSING_REQUIRED_DATA,
+          error: validationResult.error.details
+        }), true);
+      } else {
+        await AuthService.changePassword(req, res);
+      }
+    } catch (error) {
+      console.log('[AuthController][changePassword]', error);
+      ResponseHandler.send(res, error, true);
+    }
+  }
 }
 
 export const authController = new AuthController();

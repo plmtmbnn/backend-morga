@@ -7,3 +7,4 @@ export { productCustomerQuery } from './ProductCustomerQuery';
 export { transactionQuery } from './TransactionQuery';
 export { employeeQuery } from './EmployeeQuery';
 export { employeeSalaryQuery } from './EmployeeSalaryQuery';
+export { cashbookQuery } from './CashbookQuery';

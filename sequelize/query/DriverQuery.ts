@@ -24,7 +24,7 @@ class DriverQuery {
   }
 
   async update (value: any, payload: any) {
-    const options: any = ({ ...payload });
+    const options: any = ({ ...payload, returning: true });
     return await DriverModel.update(value, options);
   }
 
