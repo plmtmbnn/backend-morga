@@ -11,6 +11,7 @@ const client : any = createClient({
 client.connect();
 
 client.on('error', function (err: any) {
+  console.log(`redis://default:${REDIS_CRYPT}@${REDIS_HOST}:${REDIS_PORT}`);
   console.log('Redis Error:', err);
 });
 
