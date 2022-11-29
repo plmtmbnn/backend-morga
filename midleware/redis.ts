@@ -5,13 +5,13 @@ const REDIS_PORT: string = process.env.REDIS_PORT;
 const REDIS_CRYPT: string = process.env.REDIS_CRYPT;
 
 const client : any = createClient({
-  url: `redis://default:${REDIS_CRYPT}@${REDIS_HOST}:${REDIS_PORT}`
+  url: `redis://:${REDIS_CRYPT}@${REDIS_HOST}:${REDIS_PORT}`
 });
 
 client.connect();
 
 client.on('error', function (err: any) {
-  console.log(`redis://default:${REDIS_CRYPT}@${REDIS_HOST}:${REDIS_PORT}`);
+  console.log(`redis://:${REDIS_CRYPT}@${REDIS_HOST}:${REDIS_PORT}`);
   console.log('Redis Error:', err);
 });
 
