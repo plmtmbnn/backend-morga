@@ -19,15 +19,15 @@ module.exports = {
         SERVICE_NAME: 'backend-morga',
         NODE_ENV: 'production',
         PORT: 8081,
-        DB_HOST: "localhost",
-        DB_NAME: "bzagedrxk7ies2pkecjs",
-        DB_USER: "u2famtvno41d2r05hqh8",
-        DB_PASS: "LgOAHmctc3vQJDxE6UFk",
+        DB_HOST: 'localhost',
+        DB_NAME: 'morgan_db',
+        DB_USER: 'morgan_su',
+        DB_PASS: 'LgOAHmctc3vQJDxE6UFk',
         DB_PORT: 5432,
-        SECRET_KEY: "s3cREt_k3Y",
-        REDIS_HOST: "redis-10006.c273.us-east-1-2.ec2.cloud.redislabs.com",
-        REDIS_PORT: 10006,
-        REDIS_CRYPT: "N1ZikVdsY0kkbCBiUjCkIhYXQDmJjcBE",
+        SECRET_KEY: 's3cREt_k3Y',
+        REDIS_HOST: 'localhost',
+        REDIS_PORT: 6379,
+        REDIS_CRYPT: 'N1ZikVdsY0kkbCBiUjCkIhYXQDmJjcBE'
       }
     }
   ]

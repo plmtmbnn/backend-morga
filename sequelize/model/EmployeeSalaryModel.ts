@@ -37,7 +37,7 @@ export const EmployeeSalaryModel = sequelize.define('t_employee_salary', {
     allowNull: true
   },
   fuel_amount: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DECIMAL,
     allowNull: true
   },
   status: {
