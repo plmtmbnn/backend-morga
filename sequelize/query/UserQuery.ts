@@ -34,10 +34,9 @@ class UserQuery {
       await UserModel.sync({ force: true });
       await ProductModel.sync({ force: true });
       await TruckModel.sync({ force: true });
-      await DriverModel.sync({ force: true });
       await EmployeeModel.sync({ force: true });
-      await EmployeeSalaryModel.sync({ force: true });
       await DriverModel.sync({ force: true });
+      await EmployeeSalaryModel.sync({ force: true });
       await CustomerModel.sync({ force: true });
       await ProductCustomerModel.sync({ force: true });
       await TransactionModel.sync({ force: true });
